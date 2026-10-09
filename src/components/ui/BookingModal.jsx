@@ -67,7 +67,11 @@ export default function BookingModal({ isOpen, onClose, selectedRoomId }) {
               <h3 id="booking-title" className="font-serif text-[15px] min-[360px]:text-base sm:text-lg font-semibold text-[#D7A75C] leading-tight text-balance">
                 Đặt phòng tại Nam Phon
               </h3>
-              <p className="text-[11px] sm:text-xs text-stone-300 leading-snug text-balance">Huế thương — Nhẹ nhàng từng khoảnh khắc</p>
+              {/* Two meaning units that never split internally: wraps only after the dash */}
+              <p className="text-[11px] sm:text-xs text-stone-300 leading-snug">
+                <span className="whitespace-nowrap">Huế thương —</span>{" "}
+                <span className="whitespace-nowrap">nhẹ nhàng từng khoảnh khắc</span>
+              </p>
             </div>
           </div>
           <button
