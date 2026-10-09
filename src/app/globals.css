@@ -1,26 +1,256 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Short desktop screens (laptops, zoomed browsers): lets sections tighten to fit one screen */
+@custom-variant short (@media (max-height: 800px));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --font-serif: var(--font-serif), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-script: var(--font-script), "Dancing Script", cursive;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-brand-dark: #0D2B22;
+  --color-brand-deep: #081F18;
+  --color-brand-cream: #FAF7F2;
+  --color-brand-sand: #F5EFEB;
+  --color-brand-gold: #D7A75C;
+  --color-brand-gold-hover: #C59648;
+
+  --animate-room-fade: room-fade 0.6s ease-out both;
+  --animate-nav-drop: nav-drop 0.25s ease-out both;
+
+  @keyframes nav-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes room-fade {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+  
+  body {
+    background-color: #FAF7F2;
+    color: #222E27;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-serif, .font-display {
+    font-family: var(--font-serif);
+  }
+
+  .font-script {
+    font-family: var(--font-script);
+  }
 }
+
+/* Organic curved blob clip paths for pictures */
+.clip-organic-1 {
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+}
+
+.clip-organic-2 {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.clip-arch {
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+}
+
+/* Hero copy legibility: layered soft dark halos that follow the glyphs (no box behind the text),
+   so the copy stays readable over bright windows, white sheets or dark curtains alike */
+.text-halo-strong {
+  text-shadow:
+    0 1px 2px rgba(4, 18, 13, 0.55),
+    0 2px 10px rgba(4, 18, 13, 0.55),
+    0 6px 32px rgba(4, 18, 13, 0.6),
+    0 0 70px rgba(4, 18, 13, 0.35);
+}
+.text-halo {
+  text-shadow:
+    0 1px 2px rgba(4, 18, 13, 0.6),
+    0 2px 12px rgba(4, 18, 13, 0.55),
+    0 0 36px rgba(4, 18, 13, 0.45);
+}
+
+/* Inverse of the hero halos, for dark text over a light, busy painting (Experience) */
+.text-glow-cream-strong {
+  text-shadow:
+    0 0 1px rgba(250, 245, 236, 0.95),
+    0 0 6px rgba(250, 245, 236, 0.9),
+    0 0 18px rgba(250, 245, 236, 0.85),
+    0 0 40px rgba(250, 245, 236, 0.7);
+}
+.text-glow-cream {
+  text-shadow:
+    0 0 1px rgba(250, 245, 236, 1),
+    0 0 4px rgba(250, 245, 236, 0.95),
+    0 0 12px rgba(250, 245, 236, 0.9),
+    0 0 24px rgba(250, 245, 236, 0.75);
+}
+
+/* Header capsule: frosted glass that re-tints to whatever is scrolling behind it */
+.glass-capsule {
+  background: rgba(9, 35, 27, 0.32);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(215, 167, 92, 0.3);
+  box-shadow: 0 8px 28px -8px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Over dark sections after scrolling */
+.glass-capsule-scrolled {
+  background: rgba(9, 35, 27, 0.72);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(215, 167, 92, 0.38);
+  box-shadow: 0 10px 32px -8px rgba(0, 0, 0, 0.45), 0 0 18px 0 rgba(215, 167, 92, 0.1);
+}
+
+/* Over light (cream) sections */
+.glass-capsule-light {
+  background: rgba(250, 247, 242, 0.85);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(215, 167, 92, 0.42);
+  box-shadow: 0 10px 30px -10px rgba(120, 95, 40, 0.22);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #D7A75C;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8853A;
+}
+
+/* ==========================================================================
+   SCROLL REVEAL (driven by components/layout/ScrollEffects.jsx)
+   - html.reveal-on is set by an inline <head> script, so nothing flashes before JS runs;
+     html.reveal-fallback (added after a timeout if JS never starts) shows everything.
+   - Each variant only defines its "from" frame and plays with fill-mode backwards, so once finished
+     the element falls back to its own styles (hover transforms, opacity classes, rotations stay intact).
+   - Every section has its own motion; data-reveal-delay sets --rd for staggering.
+   ========================================================================== */
+:root {
+  --rv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --rv-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+html.reveal-on:not(.reveal-fallback) [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+}
+
+[data-reveal].is-revealed {
+  animation-duration: 950ms;
+  animation-timing-function: var(--rv-ease);
+  animation-delay: var(--rd, 0ms);
+  animation-fill-mode: backwards;
+}
+
+/* Header — drops in once on load (applied directly in Navbar.jsx) */
+@keyframes rv-nav { from { opacity: 0; transform: translateY(-28px); } }
+
+/* Hero — rises out of a soft blur */
+[data-reveal="hero"].is-revealed { animation-name: rv-hero; animation-duration: 1100ms; }
+@keyframes rv-hero { from { opacity: 0; transform: translateY(36px); filter: blur(8px); } }
+[data-reveal="hero-thumbs"].is-revealed { animation-name: rv-hero-thumbs; }
+@keyframes rv-hero-thumbs { from { opacity: 0; transform: translateX(70px); } }
+
+/* About — text glides in from the left, photo unfolds, pillow pops, slogan floats down */
+[data-reveal="about-text"].is-revealed { animation-name: rv-from-left; }
+@keyframes rv-from-left { from { opacity: 0; transform: translateX(-56px); } }
+[data-reveal="about-frame"].is-revealed { animation-name: rv-about-frame; animation-duration: 1200ms; }
+@keyframes rv-about-frame { from { opacity: 0; transform: scale(0.88) rotate(-3deg); filter: blur(6px); } }
+[data-reveal="about-pillow"].is-revealed { animation-name: rv-pop-spin; animation-timing-function: var(--rv-spring); animation-duration: 900ms; }
+@keyframes rv-pop-spin { from { opacity: 0; transform: scale(0.35) rotate(-18deg); } }
+[data-reveal="about-script"].is-revealed { animation-name: rv-script; animation-duration: 1300ms; }
+@keyframes rv-script { from { opacity: 0; transform: translateY(-18px); filter: blur(4px); clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* Rooms — header settles from above, photo opens like a curtain, panel slides in from the right */
+[data-reveal="rooms-head"].is-revealed { animation-name: rv-from-top; }
+@keyframes rv-from-top { from { opacity: 0; transform: translateY(-32px); } }
+[data-reveal="rooms-photo"].is-revealed { animation-name: rv-curtain; animation-duration: 1300ms; }
+@keyframes rv-curtain {
+  from { opacity: 0.4; clip-path: inset(0 100% 0 0 round 28px); transform: scale(1.04); }
+  to { opacity: 1; clip-path: inset(0 0 0 0 round 28px); transform: scale(1); }
+}
+[data-reveal="rooms-side"].is-revealed { animation-name: rv-from-right; }
+@keyframes rv-from-right { from { opacity: 0; transform: translateX(64px); filter: blur(3px); } }
+
+/* Amenities — photo comes into focus, icons bounce up one by one */
+[data-reveal="amen-frame"].is-revealed { animation-name: rv-focus; animation-duration: 1300ms; }
+@keyframes rv-focus { from { opacity: 0; transform: scale(1.14); filter: blur(12px); } }
+[data-reveal="amen-text"].is-revealed { animation-name: rv-rise; }
+@keyframes rv-rise { from { opacity: 0; transform: translateY(36px); } }
+[data-reveal="amen-icon"].is-revealed { animation-name: rv-bounce-up; animation-timing-function: var(--rv-spring); animation-duration: 800ms; }
+@keyframes rv-bounce-up { from { opacity: 0; transform: translateY(28px) scale(0.5); } }
+
+/* Gallery — photos are dealt onto the table like prints, the note writes itself */
+[data-reveal="gallery-text"].is-revealed { animation-name: rv-from-left; }
+[data-reveal="gallery-card"].is-revealed { animation-name: rv-deal; animation-duration: 1050ms; }
+@keyframes rv-deal { from { opacity: 0; transform: translateY(90px) rotate(-14deg) scale(0.7); } }
+[data-reveal="gallery-note"].is-revealed { animation-name: rv-write; animation-duration: 1600ms; animation-timing-function: ease-out; }
+@keyframes rv-write { from { opacity: 0.2; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 -10% 0 0); } }
+
+/* Experience — the day rises like a sunrise, card after card */
+[data-reveal="exp-head"].is-revealed { animation-name: rv-rise; }
+[data-reveal="exp-card"].is-revealed { animation-name: rv-sunrise; animation-duration: 1100ms; }
+@keyframes rv-sunrise { from { opacity: 0; transform: translateY(80px) scale(0.86); filter: saturate(0.3) brightness(1.15); } }
+
+/* Location — the map surfaces from haze, places pop up, the pin drops in */
+[data-reveal="loc-text"].is-revealed { animation-name: rv-rise; }
+[data-reveal="loc-map"].is-revealed { animation-name: rv-haze; animation-duration: 1400ms; }
+@keyframes rv-haze { from { opacity: 0; transform: scale(1.08); filter: blur(14px); } }
+[data-reveal="loc-place"].is-revealed { animation-name: rv-pop; animation-timing-function: var(--rv-spring); animation-duration: 800ms; }
+@keyframes rv-pop { from { opacity: 0; transform: scale(0.2); } }
+[data-reveal="loc-pin"].is-revealed { animation-name: rv-pin; animation-timing-function: var(--rv-spring); animation-duration: 900ms; }
+@keyframes rv-pin { from { opacity: 0; transform: translateY(-70px); } }
+
+/* Testimonials — cards flip forward like turning pages */
+[data-reveal="testi-head"].is-revealed { animation-name: rv-rise; }
+[data-reveal="testi-card"].is-revealed { animation-name: rv-flip; animation-duration: 1100ms; transform-origin: 50% 0%; }
+@keyframes rv-flip { from { opacity: 0; transform: perspective(1000px) rotateX(-38deg) translateY(36px); } }
+
+/* CTA — title draws together from wide letter-spacing */
+[data-reveal="cta-title"].is-revealed { animation-name: rv-tracking; animation-duration: 1300ms; }
+@keyframes rv-tracking { from { opacity: 0; letter-spacing: 0.22em; filter: blur(6px); } }
+[data-reveal="cta-rise"].is-revealed { animation-name: rv-rise; }
+
+/* Footer */
+[data-reveal="footer"].is-revealed { animation-name: rv-rise; animation-duration: 800ms; }
+
+/* Section divider — rules draw outward from the lotus, lotus blooms */
+[data-reveal="divider-l"].is-revealed,
+[data-reveal="divider-r"].is-revealed { animation-name: rv-draw; animation-duration: 1200ms; }
+[data-reveal="divider-l"] { transform-origin: right center; }
+[data-reveal="divider-r"] { transform-origin: left center; }
+@keyframes rv-draw { from { opacity: 0; transform: scaleX(0); } }
+[data-reveal="divider-lotus"].is-revealed { animation-name: rv-bloom; animation-timing-function: var(--rv-spring); animation-duration: 900ms; }
+@keyframes rv-bloom { from { opacity: 0; transform: scale(0.3) rotate(-25deg); } }
